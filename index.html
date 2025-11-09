@@ -148,7 +148,7 @@
 
   <!-- START SCREEN -->
   <div id="startScreen">
-    <h1>✨ tap to see magic ✨</h1>
+    <h1>✨ tap to start ✨</h1>
   </div>
 
   <!-- MAIN CONTENT -->
@@ -180,7 +180,7 @@
       </div>
     </div>
 
-    <footer>© 2025 HARSH ミ⁠●⁠﹏⁠☉⁠ミ. All rights reserved.</footer>
+    <footer>© 2025 HARSH. All rights reserved.</footer>
   </div>
 
   <!-- Background Music -->
@@ -192,10 +192,13 @@
     const music = document.getElementById("bgMusic");
 
     async function startProject() {
+      // ensure the audio can start
+      music.currentTime = 0;
       try {
         await music.play();
+        console.log("Music started!");
       } catch (err) {
-        console.log("Autoplay blocked, trying after interaction:", err);
+        console.error("Music play blocked:", err);
       }
 
       startScreen.classList.add("fadeOut");
@@ -206,9 +209,9 @@
       }, 1000);
     }
 
-    // Wait for user touch/click
-    startScreen.addEventListener("click", startProject);
-    startScreen.addEventListener("touchstart", startProject);
+    // user interaction unlocks audio
+    window.addEventListener("click", startProject, { once: true });
+    window.addEventListener("touchstart", startProject, { once: true });
   </script>
 
 </body>
